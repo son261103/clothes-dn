@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const connectDB = async (): Promise<void> => {
   try {
@@ -12,8 +9,8 @@ const connectDB = async (): Promise<void> => {
     }
 
     const conn = await mongoose.connect(mongoURI);
-    
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+
+    console.log(`MongoDB Connected: ${conn.connection.name}`);
     
     // Handle connection events
     mongoose.connection.on('error', (err) => {

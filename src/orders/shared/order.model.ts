@@ -252,8 +252,7 @@ orderSchema.virtual('orderAge').get(function(this: IOrder) {
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 });
 
-// Create indexes
-orderSchema.index({ orderNumber: 1 });
+// Create indexes (excluding orderNumber as it already has unique: true)
 orderSchema.index({ user: 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ paymentStatus: 1 });

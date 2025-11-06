@@ -138,7 +138,6 @@ userSchema.virtual('fullName').get(function(this: IUser) {
   return `${this.firstName} ${this.lastName}`;
 });
 
-// Create index for email
-userSchema.index({ email: 1 });
+// Email already has unique: true in field definition, no need for additional index
 
 export const User = mongoose.model<IUser>('User', userSchema);

@@ -130,9 +130,7 @@ categorySchema.virtual('productsCount', {
   count: true
 });
 
-// Create indexes
-categorySchema.index({ name: 1 });
-categorySchema.index({ slug: 1 });
+// Create indexes (excluding name and slug as they already have unique: true)
 categorySchema.index({ parentCategory: 1 });
 categorySchema.index({ isActive: 1 });
 categorySchema.index({ sortOrder: 1 });

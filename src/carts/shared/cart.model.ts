@@ -99,18 +99,17 @@ cartSchema.pre('save', function(this: ICart, next) {
 });
 
 // Ensure unique product-variant combination in cart
-cartSchema.index({ 
-  user: 1, 
-  'items.product': 1, 
-  'items.variant.size': 1, 
-  'items.variant.color': 1 
-}, { 
-  unique: true, 
-  sparse: true 
+cartSchema.index({
+  user: 1,
+  'items.product': 1,
+  'items.variant.size': 1,
+  'items.variant.color': 1
+}, {
+  unique: true,
+  sparse: true
 });
 
-// Create indexes
-cartSchema.index({ user: 1 });
+// Create indexes (excluding user as it already has unique: true)
 cartSchema.index({ 'items.product': 1 });
 
 export const Cart = mongoose.model<ICart>('Cart', cartSchema);

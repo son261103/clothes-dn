@@ -113,9 +113,7 @@ brandSchema.virtual('productsCount', {
   count: true
 });
 
-// Create indexes
-brandSchema.index({ name: 1 });
-brandSchema.index({ slug: 1 });
+// Create indexes (excluding name and slug as they already have unique: true)
 brandSchema.index({ isActive: 1 });
 brandSchema.index({ sortOrder: 1 });
 

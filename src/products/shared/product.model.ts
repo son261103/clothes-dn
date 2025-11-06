@@ -267,10 +267,8 @@ productSchema.virtual('isInStock').get(function(this: IProduct) {
   return this.totalStock > 0;
 });
 
-// Create indexes
+// Create indexes (excluding slug and sku as they already have unique: true)
 productSchema.index({ name: 'text', description: 'text', tags: 'text' });
-productSchema.index({ slug: 1 });
-productSchema.index({ sku: 1 });
 productSchema.index({ category: 1 });
 productSchema.index({ brand: 1 });
 productSchema.index({ price: 1 });
