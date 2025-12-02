@@ -1,68 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pale-pink: #F6E8EA;
+  --color-coral-red: #EF626C;
+  --color-charcoal-black: #22181C;
+  --color-dark-gray: #312F2F;
+  --color-mint-green: #84DCCF;
+  
+  --color-primary-50: #F6E8EA;
+  --color-primary-100: #F6E8EA;
+  --color-primary-200: #F6E8EA;
+  --color-primary-300: #F6E8EA;
+  --color-primary-400: #EF626C;
+  --color-primary-500: #EF626C;
+  --color-primary-600: #EF626C;
+  --color-primary-700: #22181C;
+  --color-primary-800: #312F2F;
+  --color-primary-900: #22181C;
+  --color-primary-950: #22181C;
+  
+  --color-accent-50: #84DCCF;
+  --color-accent-100: #84DCCF;
+  --color-accent-200: #84DCCF;
+  --color-accent-300: #84DCCF;
+  --color-accent-400: #84DCCF;
+  --color-accent-500: #84DCCF;
+  --color-accent-600: #84DCCF;
+  --color-accent-700: #84DCCF;
+  --color-accent-800: #312F2F;
+  --color-accent-900: #22181C;
+  --color-accent-950: #22181C;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Light theme colors */
+  --bg-primary: #F6E8EA;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #22181C;
+  --text-secondary: #312F2F;
+  --accent-primary: #EF626C;
+  --accent-secondary: #84DCCF;
+  --border-color: #EF626C;
+  --card-bg: #FFFFFF;
+  --hover-bg: #EF626C;
+  --hover-text: #FFFFFF;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+[data-theme="dark"] {
+  /* Dark theme colors */
+  --bg-primary: #22181C;
+  --bg-secondary: #312F2F;
+  --text-primary: #F6E8EA;
+  --text-secondary: #84DCCF;
+  --accent-primary: #EF626C;
+  --accent-secondary: #84DCCF;
+  --border-color: #EF626C;
+  --card-bg: #312F2F;
+  --hover-bg: #EF626C;
+  --hover-text: #22181C;
 }
 
+/* Custom global styles can be added here */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+/* Any additional custom styles can be added here */
