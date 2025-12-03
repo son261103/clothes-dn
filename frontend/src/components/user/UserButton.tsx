@@ -3,9 +3,10 @@ import React from 'react';
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'danger' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  fullWidth?: boolean;
 }
 
 const UserButton: React.FC<ButtonProps> = ({
@@ -13,27 +14,37 @@ const UserButton: React.FC<ButtonProps> = ({
   onClick,
   variant = 'primary',
   size = 'md',
-  className = ''
+  className = '',
+  fullWidth = false
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+  const baseClasses = 'inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variantClasses = {
-    primary: 'bg-accent-primary text-hover-text hover:bg-hover-bg', // Blue primary
-    secondary: 'bg-accent-secondary text-text-primary hover:bg-hover-bg hover:text-hover-text', // Teal secondary
-    danger: 'bg-accent-error text-hover-text hover:bg-hover-bg', // Pink-red danger
-    outline: 'border-2 border-accent-primary text-accent-primary hover:bg-accent-primary hover:text-hover-text' // Outline style
+    // Cam chủ đạo, chữ trắng (hoặc kem)
+    primary: 'bg-brand-orange text-white hover:bg-primary-hover shadow-lg shadow-brand-orange/30 hover:shadow-brand-orange/50',
+    // Nền Beige, chữ đen
+    secondary: 'bg-brand-beige text-brand-dark hover:brightness-95 shadow-sm',
+    // Viền Cam
+    outline: 'border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white',
+    // Trong suốt
+    ghost: 'bg-transparent text-text-main hover:bg-black/5 dark:hover:bg-white/5',
+    // Hiệu ứng kính
+    glass: 'glass text-text-main hover:bg-white/20 shadow-lg backdrop-blur-md'
   };
 
   const sizeClasses = {
-    sm: 'h-9 px-3 text-sm',
-    md: 'h-10 px-4 py-2',
-    lg: 'h-11 px-8 text-lg'
+    sm: 'h-9 px-4 text-sm',
+    md: 'h-11 px-6 text-base',
+    lg: 'h-14 px-10 text-lg'
   };
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const widthClass = fullWidth ? 'w-full' : '';
 
   return (
-    <button onClick={onClick} className={classes}>
+    <button 
+      onClick={onClick} 
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
+    >
       {children}
     </button>
   );

@@ -18,10 +18,10 @@ const AdminButton: React.FC<AdminButtonProps> = ({
   const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
   const variantClasses = {
-    primary: 'bg-accentPrimary text-hover-text hover:bg-hover-bg', // Coral red with hover
-    secondary: 'bg-accentSecondary text-text-primary hover:bg-hover-bg hover:text-hover-text', // Mint green with hover
-    danger: 'bg-text-primary text-bg-primary hover:bg-hover-bg hover:text-hover-text', // Charcoal black with hover
-    ghost: 'hover:bg-accentSecondary hover:text-text-primary' // Mint green hover for ghost
+    primary: 'bg-primary text-white hover:bg-primary-hover', 
+    secondary: 'bg-accent text-white hover:bg-accent-hover', 
+    danger: 'bg-status-error text-white hover:bg-red-600',
+    ghost: 'hover:bg-bg-tertiary hover:text-primary' 
   };
 
   const sizeClasses = {

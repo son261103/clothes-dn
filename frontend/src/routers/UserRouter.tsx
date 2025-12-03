@@ -1,17 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
 import UserLayout from '../components/user/UserLayout';
 import HomePage from '../pages/user/HomePage';
-import ProductsPage from '../pages/user/ProductsPage';
-import CartPage from '../pages/user/CartPage';
+import LoginPage from '../pages/user/LoginPage';
+import RegisterPage from '../pages/user/RegisterPage';
+import ForgotPasswordPage from '../pages/user/ForgotPasswordPage';
 
 const UserRouter = () => {
   return (
     <UserLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        {/* Add more user routes here as needed */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
     </UserLayout>
   );

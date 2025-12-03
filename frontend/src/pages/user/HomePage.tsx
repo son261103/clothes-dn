@@ -1,138 +1,119 @@
 import React from 'react';
-import UserButton from '../../components/user/UserButton';
 import { Link } from 'react-router-dom';
+import UserButton from '../../components/user/UserButton';
 
 const HomePage: React.FC = () => {
-  // Featured products data
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Summer T-Shirt",
-      price: "$29.99",
-      category: "Tops",
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    },
-    {
-      id: 2,
-      name: "Casual Jeans",
-      price: "$59.99",
-      category: "Bottoms",
-      image: "https://images.unsplash.com/photo-1541099649105-69e1d71a75da?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    },
-    {
-      id: 3,
-      name: "Elegant Blazer",
-      price: "$89.99",
-      category: "Outerwear",
-      image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    },
-    {
-      id: 4,
-      name: "Designer Hoodie",
-      price: "$49.99",
-      category: "Tops",
-      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    }
+  // Sử dụng ảnh Fashion chất lượng cao từ Unsplash
+  const categories = [
+    { id: 1, name: "Nữ", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600" },
+    { id: 2, name: "Nam", img: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?auto=format&fit=crop&q=80&w=600" },
+    { id: 3, name: "Trẻ em", img: "https://images.unsplash.com/photo-1503944583220-79d703919998?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  // Categories data
-  const categories = [
-    {
-      id: 1,
-      name: "Men's Fashion",
-      count: 120,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    },
-    {
-      id: 2,
-      name: "Women's Fashion",
-      count: 150,
-      image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    },
-    {
-      id: 3,
-      name: "Accessories",
-      count: 80,
-      image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&h=512&q=80"
-    }
+  const products = [
+    { id: 1, name: "Áo Sơ Mi Linen Cổ Điển", price: "1.150.000₫", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=600" },
+    { id: 2, name: "Quần Cargo Phong Cách", price: "1.700.000₫", img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=600" },
+    { id: 3, name: "Váy Mùa Hè Thoáng Mát", price: "1.350.000₫", img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=600" },
+    { id: 4, name: "Áo Hoodie Cơ Bản", price: "2.000.000₫", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=600" },
   ];
 
   return (
-    <div className="bg-bg-primary text-text-primary">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-bg-secondary to-accent-primary dark:from-bg-primary dark:to-card-bg py-16 md:py-24">
+    <div>
+      {/* HERO SECTION */}
+      <section className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-10 md:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-4">
-                Elevate Your <span className="text-accent-secondary">Style</span> with Our Collection
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            
+            <div className="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
+              <span className="inline-block py-1 px-3 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-xs tracking-widest uppercase mb-6 border border-brand-orange/20">
+                Mùa Mới 2025
+              </span>
+              <h1 className="text-5xl lg:text-7xl font-black mb-6 leading-tight text-text-main">
+                Tự Tin <br/>
+                <span className="text-brand-orange relative inline-block">
+                  Khoác Lên Phong Cách
+                  <svg className="absolute w-full h-3 -bottom-1 left-0 text-brand-beige dark:text-brand-orange/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
+                  </svg>
+                </span>
               </h1>
-              <p className="text-lg text-text-secondary mb-8 max-w-lg">
-                Discover the latest trends and timeless pieces that reflect your unique style.
-                Quality fashion for every occasion.
+              <p className="text-lg text-text-sub mb-8 max-w-md mx-auto lg:mx-0">
+                Khám phá những xu hướng thời trang mới nhất kết hợp giữa sự thoải mái và phong cách. 
+                Nâng tầm tủ đồ của bạn với bộ sưu tập độc quyền của chúng tôi.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/products">
-                  <UserButton variant="primary" className="px-8 py-3 text-lg">
-                    Shop New Arrivals
-                  </UserButton>
-                </Link>
-                <Link to="/products">
-                  <UserButton variant="secondary" className="px-8 py-3 text-lg">
-                    View Collection
-                  </UserButton>
-                </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <UserButton variant="primary" size="lg" className="rounded-full shadow-xl shadow-brand-orange/20">Mua Ngay</UserButton>
+                <UserButton variant="outline" size="lg" className="rounded-full">Khám Phá</UserButton>
               </div>
-            </div>
-            <div className="md:w-1/2 flex justify-center">
-              <div className="relative">
-                <div className="w-64 h-64 md:w-80 md:h-80 bg-accent-secondary rounded-full absolute -top-4 -left-4 opacity-20"></div>
-                <div className="w-64 h-64 md:w-80 md:h-80 bg-accent-error rounded-full absolute -bottom-4 -right-4 opacity-20"></div>
-                <div className="relative rounded-2xl overflow-hidden border-8 border-bg-secondary dark:border-bg-secondary shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1593030103066-0093718efeb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600&q=80"
-                    alt="Fashion Model"
-                    className="w-full h-auto object-cover"
-                  />
+              
+              <div className="mt-12 flex items-center justify-center lg:justify-start gap-6">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-bg-main bg-gray-300 overflow-hidden">
+                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <div className="text-sm font-medium">
+                  <span className="text-brand-orange font-bold">500+</span> Khách Hàng Hài Lòng
                 </div>
               </div>
+            </div>
+
+            <div className="lg:w-1/2 relative" data-aos="fade-left" data-aos-delay="200">
+              <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl rotate-2 border-4 border-white/30 dark:border-white/10 glass">
+                <img 
+                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" 
+                  alt="Thời Trang Nữ" 
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                />
+                
+                <div className="absolute bottom-6 right-6 glass-card p-4 rounded-xl max-w-xs animate-bounce-slow">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center text-white font-bold">%</div>
+                    <div>
+                      <p className="font-bold text-sm text-white">Sale Hè</p>
+                      <p className="text-xs text-white/80">Giảm tới 50%</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative Blobs */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-brand-beige rounded-full blur-2xl -z-10 animate-pulse"></div>
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-orange/30 rounded-full blur-2xl -z-10"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Category Section */}
-      <section className="py-16 bg-bg-primary">
+      {/* CATEGORIES */}
+      <section className="py-20 bg-bg-sub">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Shop by Category</h2>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Discover the perfect pieces for every occasion in our curated collections
-            </p>
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl font-bold mb-4">Mua Theo Danh Mục</h2>
+            <p className="text-text-sub">Tìm kiếm phong cách phù hợp nhất với bạn</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className="relative overflow-hidden rounded-2xl shadow-lg group"
+            {categories.map((cat, idx) => (
+              <div 
+                key={cat.id} 
+                className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer shadow-lg"
+                data-aos="fade-up"
+                data-aos-delay={idx * 100}
               >
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                <img 
+                  src={cat.img} 
+                  alt={cat.name} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-text-primary to-transparent opacity-80"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
-                  <h3 className="text-xl md:text-2xl font-bold text-hover-text">{category.name}</h3>
-                  <p className="text-text-secondary mt-2">{category.count} items</p>
-                  <Link to="/products" className="inline-block mt-4">
-                    <UserButton
-                      variant="secondary"
-                    >
-                      Explore
-                    </UserButton>
-                  </Link>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute bottom-0 left-0 w-full p-6">
+                  <div className="glass p-4 rounded-xl backdrop-blur-md border-white/20 flex justify-between items-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-xl font-bold text-white">{cat.name}</h3>
+                    <span className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center text-white">→</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -140,114 +121,90 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-16 bg-bg-secondary dark:bg-card-bg">
+      {/* FEATURED PRODUCTS */}
+      <section className="py-24 bg-bg-main">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Featured Collections</h2>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Handpicked items for your wardrobe that define your personal style
-            </p>
+          <div className="flex justify-between items-end mb-12" data-aos="fade-up">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Xu Hướng Hiện Nay</h2>
+              <p className="text-text-sub">Được tuyển chọn dành riêng cho bạn</p>
+            </div>
+            <Link to="/products" className="text-brand-orange font-medium hover:underline">Xem Tất Cả →</Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-card-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-border-color"
+            {products.map((product, idx) => (
+              <div 
+                key={product.id} 
+                className="group bg-bg-sub rounded-2xl p-3 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-brand-orange/20"
+                data-aos="fade-up"
+                data-aos-delay={idx * 100}
               >
-                <div className="relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-64 object-cover"
+                <div className="relative h-64 rounded-xl overflow-hidden mb-4 bg-gray-200">
+                  <img 
+                    src={product.img} 
+                    alt={product.name} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-accent-error text-hover-text px-3 py-1 rounded-full text-sm">
-                    {product.category}
+                  <div className="absolute top-3 right-3">
+                    <button className="p-2 bg-white/80 backdrop-blur rounded-full hover:bg-brand-orange hover:text-white transition-colors shadow-sm">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                    </button>
                   </div>
+                  {idx === 0 && (
+                    <div className="absolute top-3 left-3 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-md">
+                      HOT
+                    </div>
+                  )}
                 </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-text-primary mb-2">{product.name}</h3>
+                <div className="px-2 pb-2">
+                  <h3 className="font-bold text-lg mb-1 text-text-main">{product.name}</h3>
                   <div className="flex justify-between items-center">
-                    <span className="text-accent-primary font-bold text-lg">{product.price}</span>
-                    <Link to={`/products/${product.id}`}>
-                      <UserButton
-                        variant="primary"
-                      >
-                        View Details
-                      </UserButton>
-                    </Link>
+                    <span className="text-text-sub">{product.price}</span>
+                    <button className="text-brand-orange font-medium text-sm group-hover:translate-x-1 transition-transform">
+                      Thêm vào giỏ +
+                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <Link to="/products">
-              <UserButton
-                variant="secondary"
-              >
-                View All Products
-              </UserButton>
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Promotion Banner */}
-      <section className="py-16 bg-gradient-to-r from-accent-primary to-accent-secondary">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-hover-text mb-4">Summer Sale is Live!</h2>
-          <p className="text-xl text-text-secondary/80 mb-8 max-w-2xl mx-auto">
-            Enjoy up to 50% off on selected items. Limited time offer - don't miss out!
-          </p>
-          <Link to="/products">
-            <UserButton
-              variant="danger"
-              className="px-8 py-3 text-lg"
-            >
-              Shop the Sale
-            </UserButton>
-          </Link>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 bg-bg-primary">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">What Our Customers Say</h2>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Hear from our satisfied customers about their shopping experience
+      {/* NEWSLETTER BANNER - Đã thiết kế lại phần Input */}
+      <section className="py-20 container mx-auto px-4 mb-10">
+        <div 
+          className="relative rounded-[2.5rem] overflow-hidden bg-brand-orange text-white p-8 md:p-20 text-center shadow-2xl shadow-brand-orange/30"
+          data-aos="zoom-in"
+        >
+          {/* Pattern Overlay */}
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+          
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black mb-6 drop-shadow-md">Tham Gia Cùng Chúng Tôi</h2>
+            <p className="text-white/90 mb-10 text-lg leading-relaxed">
+              Đăng ký nhận bản tin để nhận ngay ưu đãi giảm giá 10% cho đơn hàng đầu tiên và cập nhật những bộ sưu tập mới nhất.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="bg-card-bg p-6 rounded-xl shadow-md border border-border-color"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-accent-error" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-text-secondary mb-4">
-                  "The quality of the clothes exceeded my expectations. Fast shipping and great customer service. Will definitely shop here again!"
-                </p>
-                <div className="flex items-center">
-                  <div className="bg-border-color rounded-full w-10 h-10 mr-3"></div>
-                  <div>
-                    <p className="font-medium text-text-primary">Customer {item}</p>
-                    <p className="text-sm text-text-secondary">Verified Buyer</p>
-                  </div>
-                </div>
+            
+            {/* INPUT FORM MỚI */}
+            <div className="bg-white p-2 rounded-full shadow-2xl max-w-lg mx-auto flex flex-col sm:flex-row gap-2 transform hover:scale-[1.02] transition-transform duration-300">
+              <div className="flex-1 flex items-center px-4 relative">
+                 {/* Icon Email */}
+                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2z" />
+                 </svg>
+                 <input 
+                    type="email" 
+                    placeholder="Nhập địa chỉ email của bạn" 
+                    className="w-full h-12 bg-transparent text-gray-800 placeholder-gray-500 font-medium focus:outline-none text-base"
+                 />
               </div>
-            ))}
+              <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-bold hover:bg-black transition-all shadow-lg shrink-0 text-base">
+                Đăng Ký
+              </button>
+            </div>
+            <p className="text-white/60 text-xs mt-4 font-medium">Chúng tôi cam kết bảo mật thông tin của bạn. Không spam.</p>
           </div>
         </div>
       </section>
