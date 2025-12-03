@@ -20,9 +20,9 @@ const AdminLayout: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-bg-secondary">
       {/* Sidebar */}
-      <div className={`bg-gray-800 text-white transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'}`}>
+      <div className={`bg-text-primary text-hover-text transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'}`}>
         <div className="p-4 flex items-center">
           {sidebarOpen ? (
             <h1 className="text-xl font-bold">Admin Panel</h1>
@@ -32,7 +32,7 @@ const AdminLayout: React.FC = () => {
           <AdminButton
             onClick={toggleSidebar}
             variant="ghost"
-            className="ml-auto text-white"
+            className="ml-auto text-hover-text"
           >
             {sidebarOpen ? '«' : '»'}
           </AdminButton>
@@ -46,8 +46,8 @@ const AdminLayout: React.FC = () => {
                   to={item.path}
                   className={`flex items-center py-3 px-6 transition-colors ${
                     location.pathname === item.path
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700'
+                      ? 'bg-accentPrimary text-hover-text'
+                      : 'text-text-secondary hover:bg-hover-bg'
                   }`}
                 >
                   <span className={`truncate ${sidebarOpen ? 'block' : 'hidden'}`}>
@@ -63,31 +63,31 @@ const AdminLayout: React.FC = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Admin Header */}
-        <header className="bg-white shadow-sm">
+        <header className="bg-bg-secondary shadow-sm border-r borderColor">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center">
-              <h2 className="text-xl font-semibold text-gray-800">Admin Dashboard</h2>
+              <h2 className="text-xl font-semibold text-text-primary">Admin Dashboard</h2>
             </div>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
               <div className="relative">
                 <AdminButton variant="ghost">Notifications</AdminButton>
-                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center transform translate-x-1 -translate-y-1">
+                <span className="absolute top-0 right-0 bg-accentPrimary text-hover-text text-xs rounded-full h-5 w-5 flex items-center justify-center transform translate-x-1 -translate-y-1">
                   3
                 </span>
               </div>
               <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
+                <div className="w-8 h-8 rounded-full bg-accentPrimary flex items-center justify-center text-hover-text mr-2">
                   A
                 </div>
-                <span className="text-gray-700">Admin User</span>
+                <span className="text-text-secondary">Admin User</span>
               </div>
             </div>
           </div>
         </header>
 
         {/* Admin Content Area */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main className="flex-1 overflow-y-auto p-6 bg-bg-primary">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
