@@ -13,8 +13,8 @@ import CheckoutPage from '../pages/user/CheckoutPage';
 
 const UserRouter = () => {
   return (
-    <UserLayout>
-      <Routes>
+    <Routes>
+      <Route element={<UserLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -25,8 +25,8 @@ const UserRouter = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-      </Routes>
-    </UserLayout>
+      </Route>
+    </Routes>
   );
 };
 

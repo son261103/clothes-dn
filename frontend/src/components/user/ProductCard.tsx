@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -13,6 +13,8 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   // Format giá tiền VND
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
@@ -45,7 +47,24 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           )}
         </div>
 
-        {/* Quick Actions (Hover) - Đã chỉnh sửa màu sắc */}
+        {/* Favorite Button */}
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            setIsFavorite(!isFavorite);
+          }}
+          className={`absolute top-3 right-3 p-2.5 rounded-full shadow-lg backdrop-blur-md transition-all duration-300 z-20
+            ${isFavorite 
+              ? 'bg-white text-red-500 dark:bg-gray-900/80 dark:text-red-500' 
+              : 'bg-white/80 text-gray-600 hover:bg-white hover:text-red-500 dark:bg-black/50 dark:text-gray-400 dark:hover:bg-black/70 dark:hover:text-red-400'
+            }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${isFavorite ? 'fill-current' : 'fill-none'}`} viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
+
+        {/* Quick Actions (Hover) */}
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex gap-3 z-10">
            
            {/* Nút Thêm vào giỏ */}

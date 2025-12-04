@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UserButton from '../../components/user/UserButton';
+import ProductCard from '../../components/user/ProductCard';
 
 const HomePage: React.FC = () => {
   // Sử dụng ảnh Fashion chất lượng cao từ Unsplash
@@ -11,10 +12,10 @@ const HomePage: React.FC = () => {
   ];
 
   const products = [
-    { id: 1, name: "Áo Sơ Mi Linen Cổ Điển", price: "1.150.000₫", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=600" },
-    { id: 2, name: "Quần Cargo Phong Cách", price: "1.700.000₫", img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=600" },
-    { id: 3, name: "Váy Mùa Hè Thoáng Mát", price: "1.350.000₫", img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=600" },
-    { id: 4, name: "Áo Hoodie Cơ Bản", price: "2.000.000₫", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=600" },
+    { id: 1, name: "Áo Sơ Mi Linen Cổ Điển", price: 1150000, category: "Nam", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=600", isNew: true },
+    { id: 2, name: "Quần Cargo Phong Cách", price: 1700000, category: "Nam", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=600" },
+    { id: 3, name: "Váy Mùa Hè Thoáng Mát", price: 1350000, category: "Nữ", image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=600", discount: 15 },
+    { id: 4, name: "Áo Hoodie Cơ Bản", price: 2000000, category: "Unisex", image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=600" },
   ];
 
   return (
@@ -126,7 +127,7 @@ const HomePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-end mb-12" data-aos="fade-up">
             <div>
-              <h2 className="text-3xl font-bold mb-2">Xu Hướng Hiện Nay</h2>
+              <h2 className="text-3xl font-bold mb-2 text-text-main">Xu Hướng Hiện Nay</h2>
               <p className="text-text-sub">Được tuyển chọn dành riêng cho bạn</p>
             </div>
             <Link to="/products" className="text-brand-orange font-medium hover:underline">Xem Tất Cả →</Link>
@@ -134,38 +135,8 @@ const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, idx) => (
-              <div 
-                key={product.id} 
-                className="group bg-bg-sub rounded-2xl p-3 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-brand-orange/20"
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
-              >
-                <div className="relative h-64 rounded-xl overflow-hidden mb-4 bg-gray-200">
-                  <img 
-                    src={product.img} 
-                    alt={product.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 right-3">
-                    <button className="p-2 bg-white/80 backdrop-blur rounded-full hover:bg-brand-orange hover:text-white transition-colors shadow-sm">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                    </button>
-                  </div>
-                  {idx === 0 && (
-                    <div className="absolute top-3 left-3 bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded-md">
-                      HOT
-                    </div>
-                  )}
-                </div>
-                <div className="px-2 pb-2">
-                  <h3 className="font-bold text-lg mb-1 text-text-main">{product.name}</h3>
-                  <div className="flex justify-between items-center">
-                    <span className="text-text-sub">{product.price}</span>
-                    <button className="text-brand-orange font-medium text-sm group-hover:translate-x-1 transition-transform">
-                      Thêm vào giỏ +
-                    </button>
-                  </div>
-                </div>
+              <div key={product.id} data-aos="fade-up" data-aos-delay={idx * 100}>
+                <ProductCard product={product} />
               </div>
             ))}
           </div>

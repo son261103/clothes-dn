@@ -76,7 +76,7 @@ const CartPage: React.FC = () => {
                             </p>
                             
                             <div className="flex justify-between items-end">
-                               <div className="flex items-center bg-white/50 dark:bg-white/10 rounded-lg h-10 border border-brand-dark/10">
+                               <div className="flex items-center bg-white dark:bg-white/10 rounded-lg h-10 border border-brand-dark/10">
                                   <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-full flex items-center justify-center hover:text-brand-orange font-bold">-</button>
                                   <span className="w-8 text-center font-bold text-sm">{item.quantity}</span>
                                   <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-full flex items-center justify-center hover:text-brand-orange font-bold">+</button>
