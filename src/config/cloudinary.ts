@@ -27,13 +27,7 @@ export const validateCloudinaryConfig = (): void => {
 
 // Initialize Cloudinary configuration
 const initCloudinary = (): void => {
-  try {
-    validateCloudinaryConfig();
-    console.log('Cloudinary configured successfully');
-  } catch (error) {
-    console.error('Cloudinary configuration error:', error);
-    process.exit(1);
-  }
+  validateCloudinaryConfig();
 };
 
 export { cloudinary, initCloudinary };

@@ -18,10 +18,8 @@ if (missingEnvVars.length > 0) {
 // Validate Cloudinary configuration
 try {
   validateCloudinaryConfig();
-  console.log('✅ Cloudinary configuration validated');
 } catch (error) {
-  console.warn('⚠️  Cloudinary configuration warning:', (error as Error).message);
-  console.warn('Image upload functionality may not work properly');
+  console.warn('⚠️  Cloudinary not configured:', (error as Error).message);
 }
 
 // Connect to database
@@ -34,9 +32,7 @@ const PORT = process.env.PORT || 5000;
 
 // Start server
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-  console.log(`📚 API Documentation available at: http://localhost:${PORT}/api/docs`);
-  console.log(`🏥 Health check available at: http://localhost:${PORT}/api/health`);
+  console.log(`🚀 Server running on http://localhost:${PORT} [${process.env.NODE_ENV || 'development'}]`);
 });
 
 // Handle unhandled promise rejections
@@ -55,10 +51,7 @@ process.on('uncaughtException', (err: Error) => {
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
-  server.close(() => {
-    console.log('Process terminated');
-  });
+  server.close(() => process.exit(0));
 });
 
 export default server;
