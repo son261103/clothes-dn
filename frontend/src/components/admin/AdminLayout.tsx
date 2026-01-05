@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import AdminButton from './AdminButton';
 import ThemeToggle from '../user/ThemeToggle';
+import { useAuth } from '../../contexts/AuthContext';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const AdminLayout: React.FC = () => {
   const location = useLocation();
+  const { user, logout } = useAuth();
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 800, once: false });
@@ -24,22 +27,22 @@ const AdminLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-bg-main text-text-main font-sans flex overflow-hidden relative">
-       {/* Abstract Background Decoration */}
-       <div className="fixed top-0 left-0 w-full h-screen overflow-hidden -z-10 pointer-events-none opacity-50">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-beige/20 dark:bg-brand-orange/5 rounded-full blur-[120px]" />
-       </div>
+      {/* Abstract Background Decoration */}
+      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden -z-10 pointer-events-none opacity-50">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-beige/20 dark:bg-brand-orange/5 rounded-full blur-[120px]" />
+      </div>
 
       {/* Sidebar - Fixed Width (No Toggle) */}
-      <aside 
+      <aside
         className="w-72 flex-shrink-0 flex flex-col border-r border-border bg-bg-sub/80 backdrop-blur-2xl z-30 h-screen transition-all duration-300 shadow-2xl"
       >
         <div className="p-6 flex items-center h-20 border-b border-border">
           <Link to="/" className="flex items-center gap-3 group w-full">
-             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange to-orange-400 text-white flex items-center justify-center shadow-lg shadow-brand-orange/30 transform group-hover:scale-105 transition-transform">
-               <span className="font-black text-xl">C</span>
-             </div>
-             <span className="text-2xl font-extrabold tracking-tight text-text-main">ClothesDN</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange to-orange-400 text-white flex items-center justify-center shadow-lg shadow-brand-orange/30 transform group-hover:scale-105 transition-transform">
+              <span className="font-black text-xl">C</span>
+            </div>
+            <span className="text-2xl font-extrabold tracking-tight text-text-main">ClothesDN</span>
           </Link>
         </div>
 
@@ -52,45 +55,61 @@ const AdminLayout: React.FC = () => {
             {menuItems.map((item) => {
               const isActive = location.pathname.includes(item.path) || (item.path === '/admin/dashboard' && (location.pathname === '/admin' || location.pathname === '/admin/'));
               return (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center py-3.5 px-4 rounded-xl transition-all duration-200 group relative overflow-hidden ${
-                    isActive
-                      ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/25'
-                      : 'text-text-sub hover:bg-white/50 dark:hover:bg-white/5 hover:text-brand-orange'
-                  }`}
-                >
-                  <div className={`w-6 h-6 flex-shrink-0 mr-3 transition-transform group-hover:scale-110 ${isActive ? 'text-white' : 'text-current'}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-full h-full">
-                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                    </svg>
-                  </div>
-                  <span className="font-semibold tracking-wide text-sm">
-                    {item.label}
-                  </span>
-                  {isActive && (
-                    <div className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
-                  )}
-                </Link>
-              </li>
-            )})}
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    className={`flex items-center py-3.5 px-4 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive
+                        ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/25'
+                        : 'text-text-sub hover:bg-white/50 dark:hover:bg-white/5 hover:text-brand-orange'
+                      }`}
+                  >
+                    <div className={`w-6 h-6 flex-shrink-0 mr-3 transition-transform group-hover:scale-110 ${isActive ? 'text-white' : 'text-current'}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-full h-full">
+                        <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                      </svg>
+                    </div>
+                    <span className="font-semibold tracking-wide text-sm">
+                      {item.label}
+                    </span>
+                    {isActive && (
+                      <div className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
+                    )}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </nav>
-        
-        <div className="p-4 border-t border-white/10 bg-white/20 dark:bg-white/5 backdrop-blur-md">
-            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 transition-colors cursor-pointer">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-orange to-yellow-400 flex items-center justify-center text-white font-bold shadow-md ring-2 ring-white/20">
-                    A
-                </div>
-                <div className="overflow-hidden flex-1">
-                    <p className="text-sm font-bold text-text-main truncate">Quản Trị Viên</p>
-                    <p className="text-xs text-text-sub truncate">admin@clothesdn.com</p>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-text-sub" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+
+        <div className="p-4 border-t border-white/10 bg-white/20 dark:bg-white/5 backdrop-blur-md relative">
+          <div
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 transition-colors cursor-pointer"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-orange to-yellow-400 flex items-center justify-center text-white font-bold shadow-md ring-2 ring-white/20">
+              {user?.firstName?.charAt(0) || 'A'}
             </div>
+            <div className="overflow-hidden flex-1">
+              <p className="text-sm font-bold text-text-main truncate">{user?.fullName || 'Admin'}</p>
+              <p className="text-xs text-text-sub truncate">{user?.email || 'admin@clothesdn.com'}</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 text-text-sub transition-transform ${showUserMenu ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </div>
+          {showUserMenu && (
+            <div className="absolute bottom-full left-4 right-4 mb-2 bg-bg-main border border-border rounded-xl shadow-xl overflow-hidden">
+              <button
+                onClick={logout}
+                className="w-full px-4 py-3 text-left text-sm font-medium text-red-500 hover:bg-red-500/10 transition-colors flex items-center gap-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Đăng xuất
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
@@ -98,24 +117,24 @@ const AdminLayout: React.FC = () => {
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 h-screen">
         {/* Admin Header - Full Width Sticky */}
         <header className="glass h-20 z-20 flex items-center justify-between px-8 shadow-sm sticky top-0 w-full backdrop-blur-xl bg-bg-main/80">
-            <div className="flex items-center">
-              <h2 className="text-2xl font-black text-text-main tracking-tight">
-                {menuItems.find(item => item.path === location.pathname)?.label || 'Tổng Quan'}
-              </h2>
+          <div className="flex items-center">
+            <h2 className="text-2xl font-black text-text-main tracking-tight">
+              {menuItems.find(item => item.path === location.pathname)?.label || 'Tổng Quan'}
+            </h2>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center px-4 py-2 rounded-full bg-bg-sub border border-border focus-within:ring-2 focus-within:ring-brand-orange/50 transition-all w-64">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-text-sub mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input type="text" placeholder="Tìm kiếm..." className="bg-transparent border-none outline-none text-sm w-full text-text-main placeholder-text-sub" />
             </div>
-            <div className="flex items-center gap-6">
-              <div className="hidden md:flex items-center px-4 py-2 rounded-full bg-bg-sub border border-border focus-within:ring-2 focus-within:ring-brand-orange/50 transition-all w-64">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-text-sub mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input type="text" placeholder="Tìm kiếm..." className="bg-transparent border-none outline-none text-sm w-full text-text-main placeholder-text-sub" />
-              </div>
-              <div className="h-8 w-[1px] bg-border mx-2"></div>
-              <ThemeToggle />
-              <Link to="/">
-                 <AdminButton variant="ghost" size="sm" className="font-bold hover:text-brand-orange">Xem Website</AdminButton>
-              </Link>
-            </div>
+            <div className="h-8 w-[1px] bg-border mx-2"></div>
+            <ThemeToggle />
+            <Link to="/">
+              <AdminButton variant="ghost" size="sm" className="font-bold hover:text-brand-orange">Xem Website</AdminButton>
+            </Link>
+          </div>
         </header>
 
         {/* Admin Content Area - Full Width */}

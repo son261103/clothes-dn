@@ -7,6 +7,8 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   fullWidth?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 const UserButton: React.FC<ButtonProps> = ({
@@ -15,7 +17,9 @@ const UserButton: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   className = '',
-  fullWidth = false
+  fullWidth = false,
+  type = 'button',
+  disabled = false
 }) => {
   const baseClasses = 'inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed';
 
@@ -41,8 +45,10 @@ const UserButton: React.FC<ButtonProps> = ({
   const widthClass = fullWidth ? 'w-full' : '';
 
   return (
-    <button 
-      onClick={onClick} 
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
     >
       {children}
