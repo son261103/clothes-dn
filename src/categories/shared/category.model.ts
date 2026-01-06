@@ -80,12 +80,17 @@ categorySchema.virtual('productsCount', {
   count: true
 });
 
-// Generate slug from name before saving
-categorySchema.pre('save', function(this: ICategory, next) {
-  if (this.isModified('name')) {
+// Generate slug from name before saving (Vietnamese support)
+categorySchema.pre('save', function (this: ICategory, next) {
+  if (this.isModified('name') && !this.slug) {
     this.slug = this.name
       .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '') // Remove special characters
+      .replace(/đ/g, 'd')  // Handle đ BEFORE normalize
+      .replace(/Đ/g, 'd')  // Handle Đ
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (á->a, ô->o, etc)
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters, keep spaces
+      .trim()
       .replace(/\s+/g, '-') // Replace spaces with hyphens
       .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
       .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
@@ -94,21 +99,21 @@ categorySchema.pre('save', function(this: ICategory, next) {
 });
 
 // Prevent deletion if category has products
-categorySchema.pre('deleteOne', { document: true, query: false }, async function(this: ICategory, next) {
+categorySchema.pre('deleteOne', { document: true, query: false }, async function (this: ICategory, next) {
   try {
     const Product = mongoose.model('Product');
     const productCount = await Product.countDocuments({ category: this._id });
-    
+
     if (productCount > 0) {
       throw new Error('Cannot delete category that has products. Please move or delete products first.');
     }
-    
+
     // Also check for subcategories
     const subcategoryCount = await mongoose.model('Category').countDocuments({ parentCategory: this._id });
     if (subcategoryCount > 0) {
       throw new Error('Cannot delete category that has subcategories. Please delete subcategories first.');
     }
-    
+
     next();
   } catch (error) {
     next(error as Error);

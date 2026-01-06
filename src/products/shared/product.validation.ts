@@ -46,8 +46,15 @@ export const createProductValidation = [
     .withMessage('Invalid brand ID'),
 
   body('variants')
-    .isArray({ min: 1 })
-    .withMessage('At least one product variant is required'),
+    .optional()
+    .custom((value) => {
+      // Parse JSON string if needed
+      const variants = typeof value === 'string' ? JSON.parse(value) : value;
+      if (!Array.isArray(variants)) {
+        throw new Error('Variants must be an array');
+      }
+      return true;
+    }),
 
   body('variants.*.size')
     .trim()

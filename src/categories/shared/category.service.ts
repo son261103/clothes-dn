@@ -1,15 +1,15 @@
 import { Category, ICategory } from './category.model';
-import { 
-  CreateCategoryDto, 
-  UpdateCategoryDto, 
+import {
+  CreateCategoryDto,
+  UpdateCategoryDto,
   CategoryResponseDto,
-  CategoryTreeDto 
+  CategoryTreeDto
 } from './category.dto';
-import { 
-  getPaginationParams, 
-  calculatePagination, 
+import {
+  getPaginationParams,
+  calculatePagination,
   getSkipValue,
-  PaginatedResponse 
+  PaginatedResponse
 } from '../../utils/pagination';
 import { uploadImage, deleteImage } from '../../utils/cloudinary';
 import { Request } from 'express';
@@ -25,7 +25,7 @@ export class CategoryService {
 
       // Build filter query
       const filter: any = {};
-      
+
       // Search by name
       if (req.query.search) {
         filter.name = new RegExp(req.query.search as string, 'i');
@@ -59,7 +59,7 @@ export class CategoryService {
       const pagination = calculatePagination(page, limit, totalCount);
 
       // Format response
-      const formattedCategories = categories.map(category => 
+      const formattedCategories = categories.map(category =>
         this.formatCategoryResponse(category as ICategory)
       );
 
@@ -144,8 +144,22 @@ export class CategoryService {
         };
       }
 
+      // Generate slug from name (Vietnamese support)
+      const slug = categoryData.name
+        .toLowerCase()
+        .replace(/đ/g, 'd')  // Handle đ BEFORE normalize
+        .replace(/Đ/g, 'd')  // Handle Đ
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (á->a, ô->o, etc)
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters, keep spaces
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+        .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+
       const category = await Category.create({
         ...categoryData,
+        slug,
         image: imageData
       });
 
@@ -186,7 +200,7 @@ export class CategoryService {
 
       const updatedCategory = await Category.findByIdAndUpdate(
         categoryId,
-        { 
+        {
           ...updateData,
           image: imageData
         },
@@ -227,8 +241,8 @@ export class CategoryService {
     const tree: CategoryTreeDto[] = [];
 
     categories
-      .filter(category => 
-        (parentId === null && !category.parentCategory) || 
+      .filter(category =>
+        (parentId === null && !category.parentCategory) ||
         (category.parentCategory && category.parentCategory.toString() === parentId)
       )
       .forEach(category => {

@@ -130,13 +130,9 @@ const productSchema = new Schema<IProduct>({
   },
   salePrice: {
     type: Number,
-    min: [0, 'Sale price cannot be negative'],
-    validate: {
-      validator: function(this: IProduct, value: number) {
-        return !value || value < this.price;
-      },
-      message: 'Sale price must be less than regular price'
-    }
+    min: [0, 'Sale price cannot be negative']
+    // Note: Sale price < price validation is done in service layer
+    // because mongoose validator doesn't work correctly during findByIdAndUpdate
   },
   images: [productImageSchema],
   category: {
@@ -213,61 +209,49 @@ const productSchema = new Schema<IProduct>({
 });
 
 // Virtual for current price (sale price if available, otherwise regular price)
-productSchema.virtual('currentPrice').get(function(this: IProduct) {
+productSchema.virtual('currentPrice').get(function (this: IProduct) {
   return this.salePrice || this.price;
 });
 
 // Virtual for discount percentage
-productSchema.virtual('discountPercentage').get(function(this: IProduct) {
+productSchema.virtual('discountPercentage').get(function (this: IProduct) {
   if (!this.salePrice) return 0;
   return Math.round(((this.price - this.salePrice) / this.price) * 100);
 });
 
 // Virtual for availability status
-productSchema.virtual('isInStock').get(function(this: IProduct) {
+productSchema.virtual('isInStock').get(function (this: IProduct) {
   return this.totalStock > 0;
 });
 
-// Generate slug from name before saving
-productSchema.pre('save', function(this: IProduct, next) {
-  if (this.isModified('name')) {
+// Product hooks and logic
+productSchema.pre('save', function (this: IProduct, next) {
+  // Generate slug from name
+  if (this.isModified('name') || !this.slug) {
     this.slug = this.name
       .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'd')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+      .replace(/^-+|-+$/g, '');
   }
+
+  // Always calculate total stock from variants
+  if (this.variants && this.variants.length > 0) {
+    this.totalStock = this.variants.reduce((total, variant) => total + (variant.stock || 0), 0);
+  } else {
+    this.totalStock = 0;
+  }
+
   next();
 });
 
-// Calculate total stock from variants before saving
-productSchema.pre('save', function(this: IProduct, next) {
-  if (this.isModified('variants')) {
-    this.totalStock = this.variants.reduce((total, variant) => total + variant.stock, 0);
-  }
-  next();
-});
-
-// Virtual for current price (sale price if available, otherwise regular price)
-productSchema.virtual('currentPrice').get(function(this: IProduct) {
-  return this.salePrice || this.price;
-});
-
-// Virtual for discount percentage
-productSchema.virtual('discountPercentage').get(function(this: IProduct) {
-  if (this.salePrice && this.salePrice < this.price) {
-    return Math.round(((this.price - this.salePrice) / this.price) * 100);
-  }
-  return 0;
-});
-
-// Virtual for stock status
-productSchema.virtual('isInStock').get(function(this: IProduct) {
-  return this.totalStock > 0;
-});
-
-// Create indexes (excluding slug and sku as they already have unique: true)
+// Create indexes
 productSchema.index({ name: 'text', description: 'text', tags: 'text' });
 productSchema.index({ category: 1 });
 productSchema.index({ brand: 1 });

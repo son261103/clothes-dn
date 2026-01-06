@@ -1,14 +1,14 @@
 import { Brand, IBrand } from './brand.model';
-import { 
-  CreateBrandDto, 
-  UpdateBrandDto, 
-  BrandResponseDto 
+import {
+  CreateBrandDto,
+  UpdateBrandDto,
+  BrandResponseDto
 } from './brand.dto';
-import { 
-  getPaginationParams, 
-  calculatePagination, 
+import {
+  getPaginationParams,
+  calculatePagination,
   getSkipValue,
-  PaginatedResponse 
+  PaginatedResponse
 } from '../../utils/pagination';
 import { uploadImage, deleteImage } from '../../utils/cloudinary';
 import { Request } from 'express';
@@ -24,7 +24,7 @@ export class BrandService {
 
       // Build filter query
       const filter: any = {};
-      
+
       // Search by name
       if (req.query.search) {
         filter.name = new RegExp(req.query.search as string, 'i');
@@ -40,6 +40,7 @@ export class BrandService {
 
       // Get brands
       const brands = await Brand.find(filter)
+        .populate('category', 'name slug')
         .sort(sort)
         .skip(skip)
         .limit(limit)
@@ -49,7 +50,7 @@ export class BrandService {
       const pagination = calculatePagination(page, limit, totalCount);
 
       // Format response
-      const formattedBrands = brands.map(brand => 
+      const formattedBrands = brands.map(brand =>
         this.formatBrandResponse(brand as IBrand)
       );
 
@@ -115,8 +116,22 @@ export class BrandService {
         };
       }
 
+      // Generate slug from name (Vietnamese support)
+      const slug = brandData.name
+        .toLowerCase()
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'd')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
       const brand = await Brand.create({
         ...brandData,
+        slug,
         logo: logoData
       });
 
@@ -157,7 +172,7 @@ export class BrandService {
 
       const updatedBrand = await Brand.findByIdAndUpdate(
         brandId,
-        { 
+        {
           ...updateData,
           logo: logoData
         },
@@ -231,6 +246,7 @@ export class BrandService {
       description: brand.description,
       slug: brand.slug,
       logo: brand.logo,
+      category: brand.category as any,
       website: brand.website,
       isActive: brand.isActive,
       sortOrder: brand.sortOrder,

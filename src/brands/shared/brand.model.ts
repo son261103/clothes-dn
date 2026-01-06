@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { ICategory } from '../../categories/shared/category.model';
 
 export interface IBrand extends Document {
   _id: string;
@@ -9,6 +10,7 @@ export interface IBrand extends Document {
     public_id: string;
     secure_url: string;
   };
+  category?: string | ICategory;
   website?: string;
   isActive: boolean;
   sortOrder: number;
@@ -54,6 +56,11 @@ const brandSchema = new Schema<IBrand>({
       'Please provide a valid website URL'
     ]
   },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  },
   isActive: {
     type: Boolean,
     default: true
@@ -76,29 +83,34 @@ brandSchema.virtual('productsCount', {
   count: true
 });
 
-// Generate slug from name before saving
-brandSchema.pre('save', function(this: IBrand, next) {
-  if (this.isModified('name')) {
+// Generate slug from name before saving (Vietnamese support)
+brandSchema.pre('save', function (this: IBrand, next) {
+  if (this.isModified('name') && !this.slug) {
     this.slug = this.name
       .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '') // Remove special characters
-      .replace(/\s+/g, '-') // Replace spaces with hyphens
-      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
-      .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'd')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
   }
   next();
 });
 
 // Prevent deletion if brand has products
-brandSchema.pre('deleteOne', { document: true, query: false }, async function(this: IBrand, next) {
+brandSchema.pre('deleteOne', { document: true, query: false }, async function (this: IBrand, next) {
   try {
     const Product = mongoose.model('Product');
     const productCount = await Product.countDocuments({ brand: this._id });
-    
+
     if (productCount > 0) {
       throw new Error('Cannot delete brand that has products. Please move or delete products first.');
     }
-    
+
     next();
   } catch (error) {
     next(error as Error);

@@ -1,5 +1,6 @@
 import { cloudinary } from '../config/cloudinary';
-import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
+import { UploadApiResponse } from 'cloudinary';
+import { Readable } from 'stream';
 
 export interface CloudinaryUploadResult {
   public_id: string;
@@ -19,53 +20,104 @@ export interface UploadOptions {
 }
 
 /**
- * Upload image to Cloudinary
+ * Upload image to Cloudinary using stream (faster than base64)
  */
 export const uploadImage = async (
   file: string | Buffer,
   options: UploadOptions = {}
 ): Promise<CloudinaryUploadResult> => {
   try {
-    const defaultOptions = {
-      folder: 'clothing-shop',
-      quality: 'auto',
+    const uploadOptions = {
+      folder: options.folder || 'clothing-shop',
+      quality: 'auto:good',
       fetch_format: 'auto',
+      timeout: 120000, // 2 minutes timeout
+      // Resize large images to max 1200px width for faster upload
+      transformation: [
+        { width: 1200, height: 1200, crop: 'limit', quality: 'auto:good' }
+      ],
       ...options
     };
 
-    const result: UploadApiResponse = await cloudinary.uploader.upload(
-      file as string,
-      defaultOptions
-    );
+    // If file is a Buffer, use upload_stream (faster than base64 for large files)
+    if (Buffer.isBuffer(file)) {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          uploadOptions,
+          (error, result) => {
+            if (error) {
+              console.error('Cloudinary stream upload error:', error);
+              reject(new Error(`Upload failed: ${error.message}`));
+            } else if (result) {
+              resolve({
+                public_id: result.public_id,
+                secure_url: result.secure_url,
+                width: result.width,
+                height: result.height,
+                format: result.format,
+                resource_type: result.resource_type,
+                created_at: result.created_at
+              });
+            } else {
+              reject(new Error('Upload failed: No result'));
+            }
+          }
+        );
 
-    return {
-      public_id: result.public_id,
-      secure_url: result.secure_url,
-      width: result.width,
-      height: result.height,
-      format: result.format,
-      resource_type: result.resource_type,
-      created_at: result.created_at
-    };
+        // Convert Buffer to readable stream and pipe to upload
+        const readable = new Readable();
+        readable.push(file);
+        readable.push(null);
+        readable.pipe(uploadStream);
+      });
+    } else {
+      // For file path (string), use regular upload
+      const result: UploadApiResponse = await cloudinary.uploader.upload(
+        file,
+        uploadOptions
+      );
+
+      return {
+        public_id: result.public_id,
+        secure_url: result.secure_url,
+        width: result.width,
+        height: result.height,
+        format: result.format,
+        resource_type: result.resource_type,
+        created_at: result.created_at
+      };
+    }
   } catch (error) {
     console.error('Cloudinary upload error:', error);
-    throw new Error('Failed to upload image to Cloudinary');
+    throw new Error(`Failed to upload image: ${(error as Error).message}`);
   }
 };
 
 /**
- * Upload multiple images to Cloudinary
+ * Upload multiple images to Cloudinary in parallel with concurrency limit
  */
 export const uploadMultipleImages = async (
   files: (string | Buffer)[],
   options: UploadOptions = {}
 ): Promise<CloudinaryUploadResult[]> => {
   try {
-    const uploadPromises = files.map(file => uploadImage(file, options));
-    return await Promise.all(uploadPromises);
+    if (files.length === 0) return [];
+
+    // Upload with concurrency limit of 3 to avoid overwhelming the server
+    const CONCURRENCY = 3;
+    const results: CloudinaryUploadResult[] = [];
+
+    for (let i = 0; i < files.length; i += CONCURRENCY) {
+      const batch = files.slice(i, i + CONCURRENCY);
+      const batchPromises = batch.map(file => uploadImage(file, options));
+      const batchResults = await Promise.all(batchPromises);
+      results.push(...batchResults);
+    }
+
+    return results;
   } catch (error) {
     console.error('Cloudinary multiple upload error:', error);
-    throw new Error('Failed to upload images to Cloudinary');
+    throw error;
   }
 };
 
@@ -87,6 +139,7 @@ export const deleteImage = async (publicId: string): Promise<boolean> => {
  */
 export const deleteMultipleImages = async (publicIds: string[]): Promise<boolean[]> => {
   try {
+    if (publicIds.length === 0) return [];
     const deletePromises = publicIds.map(publicId => deleteImage(publicId));
     return await Promise.all(deletePromises);
   } catch (error) {

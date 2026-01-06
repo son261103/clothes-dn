@@ -1,6 +1,7 @@
 export interface CreateBrandDto {
   name: string;
   description?: string;
+  category?: string;
   website?: string;
   sortOrder?: number;
   logo?: Express.Multer.File;
@@ -9,6 +10,7 @@ export interface CreateBrandDto {
 export interface UpdateBrandDto {
   name?: string;
   description?: string;
+  category?: string;
   website?: string;
   isActive?: boolean;
   sortOrder?: number;
@@ -24,6 +26,11 @@ export interface BrandResponseDto {
     public_id: string;
     secure_url: string;
   };
+  category?: {
+    _id: string;
+    name: string;
+    slug: string;
+  } | null;
   website?: string;
   isActive: boolean;
   sortOrder: number;

@@ -1,15 +1,15 @@
 import { Product, IProduct } from './product.model';
-import { 
-  CreateProductDto, 
-  UpdateProductDto, 
+import {
+  CreateProductDto,
+  UpdateProductDto,
   ProductResponseDto,
-  ProductStatsDto 
+  ProductStatsDto
 } from './product.dto';
-import { 
-  getPaginationParams, 
-  calculatePagination, 
+import {
+  getPaginationParams,
+  calculatePagination,
   getSkipValue,
-  PaginatedResponse 
+  PaginatedResponse
 } from '../../utils/pagination';
 import { uploadMultipleImages, deleteMultipleImages } from '../../utils/cloudinary';
 import { Request } from 'express';
@@ -25,7 +25,7 @@ export class ProductService {
 
       // Build filter query
       const filter: any = {};
-      
+
       // Text search
       if (req.query.search) {
         filter.$text = { $search: req.query.search as string };
@@ -105,7 +105,7 @@ export class ProductService {
       const pagination = calculatePagination(page, limit, totalCount);
 
       // Format response
-      const formattedProducts = products.map(product => 
+      const formattedProducts = products.map(product =>
         this.formatProductResponse(product as IProduct)
       );
 
@@ -168,6 +168,11 @@ export class ProductService {
    */
   async createProduct(productData: CreateProductDto): Promise<ProductResponseDto> {
     try {
+      // Validate salePrice < price
+      if (productData.salePrice && productData.price && productData.salePrice >= productData.price) {
+        throw new Error('Sale price must be less than regular price');
+      }
+
       let imagesData: any[] = [];
 
       // Upload images if provided
@@ -176,7 +181,7 @@ export class ProductService {
         const uploadResults = await uploadMultipleImages(imageBuffers, {
           folder: 'clothing-shop/products'
         });
-        
+
         imagesData = uploadResults.map((result, index) => ({
           public_id: result.public_id,
           secure_url: result.secure_url,
@@ -184,8 +189,22 @@ export class ProductService {
         }));
       }
 
+      // Generate slug from name (Vietnamese support)
+      const slug = productData.name
+        .toLowerCase()
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'd')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
       const product = await Product.create({
         ...productData,
+        slug,
         images: imagesData
       });
 
@@ -209,6 +228,12 @@ export class ProductService {
         throw new Error('Product not found');
       }
 
+      // Validate salePrice < price
+      const finalPrice = updateData.price || product.price;
+      if (updateData.salePrice && updateData.salePrice >= finalPrice) {
+        throw new Error('Sale price must be less than regular price');
+      }
+
       let imagesData = product.images;
 
       // Handle image update
@@ -224,7 +249,7 @@ export class ProductService {
         const uploadResults = await uploadMultipleImages(imageBuffers, {
           folder: 'clothing-shop/products'
         });
-        
+
         imagesData = uploadResults.map((result, index) => ({
           public_id: result.public_id,
           secure_url: result.secure_url,
@@ -232,17 +257,19 @@ export class ProductService {
         }));
       }
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        { 
-          ...updateData,
-          images: imagesData
-        },
-        { new: true, runValidators: true }
-      ).populate('category', 'name slug')
-       .populate('brand', 'name slug');
+      // Update product fields
+      Object.assign(product, {
+        ...updateData,
+        images: imagesData
+      });
 
-      return this.formatProductResponse(updatedProduct!);
+      const updatedProduct = await product.save();
+
+      const populatedProduct = await Product.findById(updatedProduct._id)
+        .populate('category', 'name slug')
+        .populate('brand', 'name slug');
+
+      return this.formatProductResponse(populatedProduct!);
     } catch (error) {
       throw error;
     }
@@ -299,7 +326,7 @@ export class ProductService {
             }
           }
         ]),
-        
+
         // Top categories
         Product.aggregate([
           { $match: { isActive: true } },
@@ -310,7 +337,7 @@ export class ProductService {
           { $sort: { count: -1 } },
           { $limit: 5 }
         ]),
-        
+
         // Top brands
         Product.aggregate([
           { $match: { isActive: true } },
