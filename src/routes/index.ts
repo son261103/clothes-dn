@@ -14,6 +14,7 @@ import adminProductRoutes from '../products/admin/product.routes';
 import userCartRoutes from '../carts/user/cart.routes';
 import userOrderRoutes from '../orders/user/order.routes';
 import adminOrderRoutes from '../orders/admin/order.routes';
+import aiRoutes from '../ai/ai.routes';
 
 const router = Router();
 
@@ -53,6 +54,9 @@ router.use('/carts/user', userCartRoutes);
 // Order routes
 router.use('/orders/user', userOrderRoutes);
 router.use('/orders/admin', adminOrderRoutes);
+
+// AI routes
+router.use('/ai', aiRoutes);
 
 // API documentation endpoint
 router.get('/docs', (req, res) => {

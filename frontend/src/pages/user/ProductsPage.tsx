@@ -46,7 +46,7 @@ const CustomDropdown = ({ options, value, onChange }: { options: any[], value: s
     <div className="relative w-full md:w-64 z-50" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-4 py-3 rounded-xl glass bg-white/40 dark:bg-black/30 border border-brand-dark/10 dark:border-white/20 hover:border-brand-orange/50 transition-all text-text-main font-medium backdrop-blur-lg shadow-sm"
+        className="w-full flex items-center justify-between px-4 py-3 rounded-xl glass bg-bg-sub/50 border border-border hover:border-brand-orange/50 transition-all text-text-main font-medium backdrop-blur-lg shadow-sm"
       >
         <span>{selectedLabel}</span>
         <svg className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -65,11 +65,10 @@ const CustomDropdown = ({ options, value, onChange }: { options: any[], value: s
               <li key={option.value}>
                 <button
                   onClick={() => { onChange(option.value); setIsOpen(false); }}
-                  className={`w-full text-left px-4 py-2.5 rounded-lg text-sm transition-all font-medium ${
-                    value === option.value 
-                    ? 'bg-brand-orange text-white shadow-md' 
-                    : 'text-text-main hover:bg-brand-orange/10 hover:text-brand-orange hover:pl-5'
-                  }`}
+                  className={`w-full text-left px-4 py-2.5 rounded-lg text-sm transition-all font-medium ${value === option.value
+                      ? 'bg-brand-orange text-white shadow-md'
+                      : 'text-text-main hover:bg-brand-orange/10 hover:text-brand-orange hover:pl-5'
+                    }`}
                 >
                   {option.label}
                 </button>
@@ -89,7 +88,7 @@ const ProductsPage: React.FC = () => {
   const [sortBy, setSortBy] = useState("newest");
 
   // Filter Logic
-  const filteredProducts = MOCK_PRODUCTS.filter(p => 
+  const filteredProducts = MOCK_PRODUCTS.filter(p =>
     (selectedCategory === "Tất cả" || p.category === selectedCategory) &&
     p.price <= priceRange
   );
@@ -106,39 +105,38 @@ const ProductsPage: React.FC = () => {
       <div className="relative h-64 md:h-80 overflow-hidden mb-10 rounded-b-[3rem] shadow-2xl mx-4 md:mx-0 mt-4 md:mt-0 group">
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 to-transparent z-10 flex flex-col justify-center px-8 md:px-20 transition-opacity duration-500">
           <span className="text-brand-orange font-bold tracking-widest uppercase mb-2" data-aos="fade-right">Bộ Sưu Tập Mùa Hè</span>
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 drop-shadow-lg" data-aos="fade-right" data-aos-delay="100">Phong Cách <br/> Đích Thực</h1>
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 drop-shadow-lg" data-aos="fade-right" data-aos-delay="100">Phong Cách <br /> Đích Thực</h1>
           <p className="text-white/80 max-w-md text-lg" data-aos="fade-right" data-aos-delay="200">Khám phá những thiết kế độc đáo, tôn vinh cá tính của bạn.</p>
         </div>
-        <img 
-          src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=1600" 
-          alt="Banner" 
+        <img
+          src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=1600"
+          alt="Banner"
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-[3s]"
         />
       </div>
 
       <div className="container mx-auto px-4 flex flex-col lg:flex-row gap-8 relative z-10">
-        
+
         {/* SIDEBAR (DESKTOP) - GLASSMORPHISM */}
         <div className="hidden lg:block w-1/4">
-          <div className="glass p-6 rounded-[2rem] sticky top-24 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-xl">
+          <div className="glass p-6 rounded-[2rem] sticky top-24 bg-bg-main/60 backdrop-blur-xl border border-border shadow-xl">
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-text-main pb-4 border-b border-brand-dark/5 dark:border-white/10">
               <svg className="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
               Bộ Lọc
             </h3>
-            
+
             {/* Categories */}
             <div className="mb-8">
               <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Danh mục</h4>
               <ul className="space-y-2">
                 {CATEGORIES.map(cat => (
                   <li key={cat}>
-                    <button 
+                    <button
                       onClick={() => setSelectedCategory(cat)}
-                      className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex justify-between items-center font-medium ${
-                        selectedCategory === cat 
-                        ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/30 font-bold' 
-                        : 'text-text-main hover:bg-brand-orange/10 hover:text-brand-orange hover:pl-6'
-                      }`}
+                      className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex justify-between items-center font-medium ${selectedCategory === cat
+                          ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/30 font-bold'
+                          : 'text-text-main hover:bg-brand-orange/10 hover:text-brand-orange hover:pl-6'
+                        }`}
                     >
                       {cat}
                       {selectedCategory === cat && <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">✓</span>}
@@ -151,16 +149,16 @@ const ProductsPage: React.FC = () => {
             {/* Price Range */}
             <div className="mb-8">
               <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Khoảng giá</h4>
-              <input 
-                type="range" 
-                min="0" 
-                max="5000000" 
+              <input
+                type="range"
+                min="0"
+                max="5000000"
                 step="100000"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
                 className="w-full h-2 bg-brand-dark/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-brand-orange"
               />
-              <div className="flex justify-between text-sm font-medium mt-3 bg-white/30 dark:bg-black/20 p-2 rounded-lg border border-white/10">
+              <div className="flex justify-between text-sm font-medium mt-3 bg-bg-sub/50 p-2 rounded-lg border border-border">
                 <span className="text-text-sub">0₫</span>
                 <span className="text-brand-orange font-bold">{new Intl.NumberFormat('vi-VN').format(priceRange)}₫</span>
               </div>
@@ -171,7 +169,7 @@ const ProductsPage: React.FC = () => {
               <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Kích thước</h4>
               <div className="flex flex-wrap gap-2">
                 {SIZES.map(size => (
-                  <button key={size} className="w-10 h-10 rounded-xl border border-brand-dark/10 dark:border-white/20 bg-white/20 dark:bg-white/5 hover:bg-brand-orange hover:text-white hover:border-brand-orange transition-all font-medium text-sm flex items-center justify-center shadow-sm hover:shadow-md text-text-main">
+                  <button key={size} className="w-10 h-10 rounded-xl border border-border bg-bg-main/50 hover:bg-brand-orange hover:text-white hover:border-brand-orange transition-all font-medium text-sm flex items-center justify-center shadow-sm hover:shadow-md text-text-main">
                     {size}
                   </button>
                 ))}
@@ -183,31 +181,31 @@ const ProductsPage: React.FC = () => {
         {/* MAIN CONTENT */}
         <div className="w-full lg:w-3/4">
           {/* Toolbar Glassmorphism - Z-Index FIX */}
-          <div className="glass mb-8 p-4 rounded-[1.5rem] bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-lg flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
+          <div className="glass mb-8 p-4 rounded-[1.5rem] bg-bg-main/60 backdrop-blur-xl border border-border shadow-lg flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
             <div className="flex items-center gap-3 pl-2">
               <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center">
-                 <svg className="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" /></svg>
+                <svg className="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" /></svg>
               </div>
               <p className="text-text-sub font-medium">
                 Tìm thấy <span className="text-text-main font-bold text-lg">{filteredProducts.length}</span> sản phẩm
               </p>
             </div>
-            
-            <div className="flex gap-3 w-full md:w-auto items-center relative z-50">
-               <button 
-                 className="lg:hidden flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-brand-orange text-white rounded-xl shadow-lg font-bold hover:bg-orange-600 transition-colors"
-                 onClick={() => setIsFilterOpen(true)}
-               >
-                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                 Bộ Lọc
-               </button>
 
-               {/* Custom Dropdown */}
-               <CustomDropdown 
-                 options={SORT_OPTIONS} 
-                 value={sortBy} 
-                 onChange={setSortBy} 
-               />
+            <div className="flex gap-3 w-full md:w-auto items-center relative z-50">
+              <button
+                className="lg:hidden flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-brand-orange text-white rounded-xl shadow-lg font-bold hover:bg-orange-600 transition-colors"
+                onClick={() => setIsFilterOpen(true)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                Bộ Lọc
+              </button>
+
+              {/* Custom Dropdown */}
+              <CustomDropdown
+                options={SORT_OPTIONS}
+                value={sortBy}
+                onChange={setSortBy}
+              />
             </div>
           </div>
 
@@ -220,25 +218,25 @@ const ProductsPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-32 glass rounded-[2rem] border-dashed border-2 border-text-sub/20 bg-white/20 dark:bg-white/5 backdrop-blur-md">
-               <div className="w-24 h-24 bg-brand-orange/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-                  <svg className="w-12 h-12 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-               </div>
-               <h3 className="text-2xl font-bold mb-2 text-text-main">Không tìm thấy sản phẩm nào</h3>
-               <p className="text-text-sub">Hãy thử thay đổi bộ lọc hoặc tìm kiếm từ khóa khác.</p>
+              <div className="w-24 h-24 bg-brand-orange/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                <svg className="w-12 h-12 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-2 text-text-main">Không tìm thấy sản phẩm nào</h3>
+              <p className="text-text-sub">Hãy thử thay đổi bộ lọc hoặc tìm kiếm từ khóa khác.</p>
             </div>
           )}
 
           {/* Pagination */}
           <div className="mt-16 flex justify-center gap-3">
-             <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center group bg-white/30 dark:bg-white/5">
-                <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-             </button>
-             <button className="w-12 h-12 rounded-xl bg-brand-orange text-white font-bold shadow-lg shadow-brand-orange/30 flex items-center justify-center scale-110">1</button>
-             <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center bg-white/30 dark:bg-white/5">2</button>
-             <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center bg-white/30 dark:bg-white/5">3</button>
-             <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center group bg-white/30 dark:bg-white/5">
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-             </button>
+            <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center group bg-white/30 dark:bg-white/5">
+              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button className="w-12 h-12 rounded-xl bg-brand-orange text-white font-bold shadow-lg shadow-brand-orange/30 flex items-center justify-center scale-110">1</button>
+            <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center bg-white/30 dark:bg-white/5">2</button>
+            <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center bg-white/30 dark:bg-white/5">3</button>
+            <button className="w-12 h-12 rounded-xl glass hover:bg-brand-orange hover:text-white transition-all flex items-center justify-center group bg-white/30 dark:bg-white/5">
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -247,65 +245,65 @@ const ProductsPage: React.FC = () => {
       <AnimatePresence>
         {isFilterOpen && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/60 z-[60] backdrop-blur-sm lg:hidden"
               onClick={() => setIsFilterOpen(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 w-[85vw] max-w-sm h-full bg-bg-main z-[70] p-6 shadow-2xl overflow-y-auto lg:hidden border-l border-white/10"
             >
-               <div className="flex justify-between items-center mb-8 pb-4 border-b border-border">
-                  <h3 className="text-2xl font-black text-text-main">Bộ Lọc</h3>
-                  <button onClick={() => setIsFilterOpen(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <svg className="w-6 h-6 text-text-sub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                  </button>
-               </div>
+              <div className="flex justify-between items-center mb-8 pb-4 border-b border-border">
+                <h3 className="text-2xl font-black text-text-main">Bộ Lọc</h3>
+                <button onClick={() => setIsFilterOpen(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-6 h-6 text-text-sub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
 
-               {/* Mobile Categories */}
-               <div className="mb-8">
-                  <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Danh mục</h4>
-                  <ul className="space-y-2">
-                    {CATEGORIES.map(cat => (
-                      <li key={cat}>
-                        <button 
-                          onClick={() => { setSelectedCategory(cat); setIsFilterOpen(false); }}
-                          className={`w-full text-left px-4 py-3.5 rounded-xl transition-all ${selectedCategory === cat ? 'bg-brand-orange text-white font-bold shadow-lg' : 'bg-bg-sub text-text-main'}`}
-                        >
-                          {cat}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+              {/* Mobile Categories */}
+              <div className="mb-8">
+                <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Danh mục</h4>
+                <ul className="space-y-2">
+                  {CATEGORIES.map(cat => (
+                    <li key={cat}>
+                      <button
+                        onClick={() => { setSelectedCategory(cat); setIsFilterOpen(false); }}
+                        className={`w-full text-left px-4 py-3.5 rounded-xl transition-all ${selectedCategory === cat ? 'bg-brand-orange text-white font-bold shadow-lg' : 'bg-bg-sub text-text-main'}`}
+                      >
+                        {cat}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Mobile Price Range */}
+              <div className="mb-8">
+                <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Khoảng giá</h4>
+                <input
+                  type="range"
+                  min="0"
+                  max="5000000"
+                  step="100000"
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-orange"
+                />
+                <div className="flex justify-between text-sm font-medium mt-3 bg-bg-sub p-3 rounded-xl">
+                  <span className="text-text-sub">0₫</span>
+                  <span className="text-brand-orange font-bold">{new Intl.NumberFormat('vi-VN').format(priceRange)}₫</span>
                 </div>
+              </div>
 
-                {/* Mobile Price Range */}
-                <div className="mb-8">
-                  <h4 className="font-bold text-sm text-text-sub uppercase mb-4 tracking-wider">Khoảng giá</h4>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="5000000" 
-                    step="100000"
-                    value={priceRange}
-                    onChange={(e) => setPriceRange(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-orange"
-                  />
-                   <div className="flex justify-between text-sm font-medium mt-3 bg-bg-sub p-3 rounded-xl">
-                    <span className="text-text-sub">0₫</span>
-                    <span className="text-brand-orange font-bold">{new Intl.NumberFormat('vi-VN').format(priceRange)}₫</span>
-                  </div>
-                </div>
-
-                 <UserButton fullWidth size="lg" onClick={() => setIsFilterOpen(false)} className="shadow-xl">
-                    Áp dụng bộ lọc
-                 </UserButton>
+              <UserButton fullWidth size="lg" onClick={() => setIsFilterOpen(false)} className="shadow-xl">
+                Áp dụng bộ lọc
+              </UserButton>
             </motion.div>
           </>
         )}

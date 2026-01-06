@@ -25,6 +25,7 @@ const UserLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { name: 'Trang chủ', path: '/' },
     { name: 'Sản phẩm', path: '/products' },
+    { name: 'Fashion AI', path: '/ai-assistant' },
     { name: 'Bộ sưu tập', path: '/collections' },
     { name: 'Giới thiệu', path: '/about' }
   ];
@@ -35,8 +36,8 @@ const UserLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
       {/* Header Glassmorphism */}
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${scrolled
-            ? 'glass py-2 border-white/20 dark:border-white/10 shadow-lg'
-            : 'bg-transparent border-transparent py-6'
+          ? 'glass py-2 border-white/20 dark:border-white/10 shadow-lg'
+          : 'bg-transparent border-transparent py-6'
           }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -204,7 +205,7 @@ const UserLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
           <div>
             <h4 className="font-bold mb-4 text-brand-orange">Bản tin</h4>
             <div className="flex gap-2">
-              <input type="email" placeholder="Email của bạn..." className="flex-1 bg-bg-main border border-border rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-brand-orange outline-none" />
+              <input type="email" placeholder="Email của bạn..." className="flex-1 bg-bg-main text-text-main border border-border rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-brand-orange outline-none" />
               <button className="bg-brand-orange text-white px-4 py-2 rounded-lg hover:bg-primary-hover">→</button>
             </div>
           </div>

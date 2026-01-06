@@ -24,13 +24,13 @@ const HomePage: React.FC = () => {
       <section className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
-            
+
             <div className="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
               <span className="inline-block py-1 px-3 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-xs tracking-widest uppercase mb-6 border border-brand-orange/20">
                 Mùa Mới 2025
               </span>
               <h1 className="text-5xl lg:text-7xl font-black mb-6 leading-tight text-text-main">
-                Tự Tin <br/>
+                Tự Tin <br />
                 <span className="text-brand-orange relative inline-block">
                   Khoác Lên Phong Cách
                   <svg className="absolute w-full h-3 -bottom-1 left-0 text-brand-beige dark:text-brand-orange/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -39,19 +39,19 @@ const HomePage: React.FC = () => {
                 </span>
               </h1>
               <p className="text-lg text-text-sub mb-8 max-w-md mx-auto lg:mx-0">
-                Khám phá những xu hướng thời trang mới nhất kết hợp giữa sự thoải mái và phong cách. 
+                Khám phá những xu hướng thời trang mới nhất kết hợp giữa sự thoải mái và phong cách.
                 Nâng tầm tủ đồ của bạn với bộ sưu tập độc quyền của chúng tôi.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <UserButton variant="primary" size="lg" className="rounded-full shadow-xl shadow-brand-orange/20">Mua Ngay</UserButton>
                 <UserButton variant="outline" size="lg" className="rounded-full">Khám Phá</UserButton>
               </div>
-              
+
               <div className="mt-12 flex items-center justify-center lg:justify-start gap-6">
                 <div className="flex -space-x-3">
-                  {[1,2,3,4].map(i => (
+                  {[1, 2, 3, 4].map(i => (
                     <div key={i} className="w-10 h-10 rounded-full border-2 border-bg-main bg-gray-300 overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-full h-full object-cover" />
+                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
                     </div>
                   ))}
                 </div>
@@ -63,12 +63,12 @@ const HomePage: React.FC = () => {
 
             <div className="lg:w-1/2 relative" data-aos="fade-left" data-aos-delay="200">
               <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl rotate-2 border-4 border-white/30 dark:border-white/10 glass">
-                <img 
-                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" 
-                  alt="Thời Trang Nữ" 
+                <img
+                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800"
+                  alt="Thời Trang Nữ"
                   className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
                 />
-                
+
                 <div className="absolute bottom-6 right-6 glass-card p-4 rounded-xl max-w-xs animate-bounce-slow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-brand-orange rounded-full flex items-center justify-center text-white font-bold">%</div>
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Decorative Blobs */}
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-brand-beige rounded-full blur-2xl -z-10 animate-pulse"></div>
               <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-orange/30 rounded-full blur-2xl -z-10"></div>
@@ -98,15 +98,15 @@ const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((cat, idx) => (
-              <div 
-                key={cat.id} 
+              <div
+                key={cat.id}
                 className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer shadow-lg"
                 data-aos="fade-up"
                 data-aos-delay={idx * 100}
               >
-                <img 
-                  src={cat.img} 
-                  alt={cat.name} 
+                <img
+                  src={cat.img}
+                  alt={cat.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
@@ -145,33 +145,33 @@ const HomePage: React.FC = () => {
 
       {/* NEWSLETTER BANNER - Đã thiết kế lại phần Input */}
       <section className="py-20 container mx-auto px-4 mb-10">
-        <div 
+        <div
           className="relative rounded-[2.5rem] overflow-hidden bg-brand-orange text-white p-8 md:p-20 text-center shadow-2xl shadow-brand-orange/30"
           data-aos="zoom-in"
         >
           {/* Pattern Overlay */}
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-          
+
           <div className="relative z-10 max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-black mb-6 drop-shadow-md">Tham Gia Cùng Chúng Tôi</h2>
             <p className="text-white/90 mb-10 text-lg leading-relaxed">
               Đăng ký nhận bản tin để nhận ngay ưu đãi giảm giá 10% cho đơn hàng đầu tiên và cập nhật những bộ sưu tập mới nhất.
             </p>
-            
+
             {/* INPUT FORM MỚI */}
-            <div className="bg-white p-2 rounded-full shadow-2xl max-w-lg mx-auto flex flex-col sm:flex-row gap-2 transform hover:scale-[1.02] transition-transform duration-300">
+            <div className="bg-bg-main p-2 rounded-full shadow-2xl max-w-lg mx-auto flex flex-col sm:flex-row gap-2 transform hover:scale-[1.02] transition-transform duration-300">
               <div className="flex-1 flex items-center px-4 relative">
-                 {/* Icon Email */}
-                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2z" />
-                 </svg>
-                 <input 
-                    type="email" 
-                    placeholder="Nhập địa chỉ email của bạn" 
-                    className="w-full h-12 bg-transparent text-gray-800 placeholder-gray-500 font-medium focus:outline-none text-base"
-                 />
+                {/* Icon Email */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-text-sub mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2z" />
+                </svg>
+                <input
+                  type="email"
+                  placeholder="Nhập địa chỉ email của bạn"
+                  className="w-full h-12 bg-transparent text-text-main placeholder-text-sub/60 font-medium focus:outline-none text-base"
+                />
               </div>
-              <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-bold hover:bg-black transition-all shadow-lg shrink-0 text-base">
+              <button className="bg-brand-dark dark:bg-brand-orange text-white px-8 py-3 rounded-full font-bold hover:bg-black dark:hover:bg-brand-orange/80 transition-all shadow-lg shrink-0 text-base">
                 Đăng Ký
               </button>
             </div>

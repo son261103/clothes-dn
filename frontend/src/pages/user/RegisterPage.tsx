@@ -14,7 +14,7 @@ const RegisterPage: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-bg-main via-bg-main/50 to-transparent"></div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -37,10 +37,10 @@ const RegisterPage: React.FC = () => {
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Nguyễn Văn A"
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
@@ -55,14 +55,14 @@ const RegisterPage: React.FC = () => {
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="vidu@email.com"
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
-            
+
             {/* Mật khẩu */}
             <div className="space-y-2">
               <label className="text-sm font-bold text-text-main ml-1">Mật khẩu</label>
@@ -72,10 +72,10 @@ const RegisterPage: React.FC = () => {
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
@@ -89,18 +89,18 @@ const RegisterPage: React.FC = () => {
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
 
             <div className="pt-4">
-               <UserButton variant="primary" fullWidth size="lg" className="rounded-2xl py-4 text-lg shadow-xl shadow-brand-orange/20 hover:shadow-brand-orange/40 transition-all duration-300 hover:-translate-y-1">
-                 Đăng Ký Ngay
-               </UserButton>
+              <UserButton variant="primary" fullWidth size="lg" className="rounded-2xl py-4 text-lg shadow-xl shadow-brand-orange/20 hover:shadow-brand-orange/40 transition-all duration-300 hover:-translate-y-1">
+                Đăng Ký Ngay
+              </UserButton>
             </div>
           </form>
 

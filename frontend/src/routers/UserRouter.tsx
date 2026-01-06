@@ -10,6 +10,7 @@ import CollectionsPage from '../pages/user/CollectionsPage';
 import AboutPage from '../pages/user/AboutPage';
 import CartPage from '../pages/user/CartPage';
 import CheckoutPage from '../pages/user/CheckoutPage';
+import AIAssistant from '../pages/user/AIAssistant';
 
 const UserRouter = () => {
   return (
@@ -21,6 +22,7 @@ const UserRouter = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/ai-assistant" element={<AIAssistant />} />
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/cart" element={<CartPage />} />

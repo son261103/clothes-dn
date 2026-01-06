@@ -78,7 +78,7 @@ const LoginPage: React.FC = () => {
                   placeholder="vidu@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
+                  className="w-full pl-12 pr-5 py-3.5 rounded-2xl bg-bg-sub/50 border border-border focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition-all text-text-main placeholder-text-sub/50 font-medium shadow-sm"
                 />
               </div>
             </div>
@@ -127,11 +127,11 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center px-4 py-3 border border-white/40 rounded-2xl hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-300 gap-3 text-sm font-bold bg-white/30 dark:bg-black/20 shadow-sm hover:shadow-md group">
+              <button className="flex items-center justify-center px-4 py-3 border border-border rounded-2xl hover:bg-bg-sub transition-all duration-300 gap-3 text-sm font-bold bg-bg-sub/50 shadow-sm hover:shadow-md group text-text-main">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Google" />
                 Google
               </button>
-              <button className="flex items-center justify-center px-4 py-3 border border-white/40 rounded-2xl hover:bg-white/60 dark:hover:bg-white/10 transition-all duration-300 gap-3 text-sm font-bold bg-white/30 dark:bg-black/20 shadow-sm hover:shadow-md group">
+              <button className="flex items-center justify-center px-4 py-3 border border-border rounded-2xl hover:bg-bg-sub transition-all duration-300 gap-3 text-sm font-bold bg-bg-sub/50 shadow-sm hover:shadow-md group text-text-main">
                 <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Facebook" />
                 Facebook
               </button>
